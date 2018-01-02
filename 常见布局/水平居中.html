@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>水平居中</title>
+    <style>
+        #parent1{width: 500px; height: 200px; background-color: #ccc; border: 1px solid #000;  text-align: center;}
+        #child1{width: 200px; height: 100px; background-color:  red; display: inline-block;}
+        #parent2{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000;}
+        #child2{width: 200px; height: 100px; background-color:  red; margin:0 auto;}
+        #parent3{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000;}
+        #child3{width: 200px; height: 100px; background-color:  red; display: table; margin: 0 auto;}
+        #parent4{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000; position: relative;}
+        #child4{width: 200px; height: 100px; background-color:  red; position: absolute; left: 50%; transform: translate(-50%);}
+        #parent5{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000; display: flex; justify-content: center;}
+        #child5{width: 200px; height: 100px; background-color:  red;}
+    </style>
+</head>
+<body>
+<!-- 水平居中 -->
+    <!-- 用inline-block和text-align实现 -->
+    <div id="parent1">
+        <div id="child1"></div>
+    </div>
+    <!-- 用margin: 0 auto实现 子元素需要指定宽度-->
+    <div id="parent2">
+        <div id="child2"></div>
+    </div>
+    <!-- 使用table实现 也用到margin:0 auto,但子元素不需要指定宽度，不兼容ie6,ie7-->
+    <div id="parent3">
+        <div id="child3"></div>
+    </div>
+    <!-- 使用绝对定位实现 transform: translate(-50%);也可以改为transform: translateX(-50%)
+        或者margin-left的值为负的子元素宽度的一半 兼容性差-->
+    <div id="parent4">
+            <div id="child4"></div>
+    </div>
+    <!-- 使用flex布局实现 可以直接给父元素设置justify-content:center;或者给子元素设置margin:0 auto;-->
+    <div id="parent5">
+            <div id="child5"></div>
+    </div>
+</body>
+</html>

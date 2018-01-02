@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .divv{width: 500px; border: 1px solid #000; background-color: #ccc; margin-bottom: 20px;}
+        /* 双栏布局 */
+
+        /* 利用float+margin实现 */
+        #left1{width: 100px; height: 100px;background-color: red; float: left;}
+        #right1{height: 100px; background-color: blue; margin-left: 100px;}
+        /* 使用float+overflow 
+        overflow:hidden; 出发bfc模式，浮动无法影响，隔离汽其他元素*/
+        #left2{width: 100px; height: 100px;background-color: red; float: left;}
+        #right2{height: 100px; background-color: blue; overflow: hidden;}
+        /* 使用table实现 */
+        /* table-layout有三个属性值：auto、fixed、inherit
+        auto：默认，自动表格布局 
+        fixed：固定表格布局,与自动表格布局相比，允许浏览器更快地对表格进行布局。
+        当表格中有很长的英文时，如果没有设置table-layout:fixed 或者 word-break:break-all，则单元格显示的宽度不是我们设置的宽度
+        css的省略号的一般写法:white-space: nowrap; overflow: hidden; text-overflow: ellipsis;并设置table-layout:fixed;*/
+        #parent3{width: 500px; border: 1px solid #000; background-color: #ccc; margin-bottom: 20px;
+        display: table; table-layout: fixed;}
+        #left3{width: 100px; height: 100px;background-color: red; display: table-cell;}
+        #right3{height: 100px; background-color: blue; display: table-cell;}
+        /* 利用flex实现 */
+        /* flex: 1;
+        flex 是 flex-grow、flex-shrink、flex-basis的缩写
+        具体不太了解,等到flex布局时看*/
+        #parent4{width: 500px; border: 1px solid #000; background-color: #ccc; margin-bottom: 20px;
+        display: flex;}
+        #left4{width: 100px; height: 100px;background-color: red;}
+        #right4{height: 100px; background-color: blue; flex: 1;}
+    </style>
+</head>
+<body>
+    <div class="divv">
+        <div id="left1"></div>
+        <div id="right1"></div>
+    </div>
+    <div class="divv">
+        <div id="right2"></div>
+        <div id="left2"></div>
+        
+    </div>
+    <div id="parent3">
+        <div id="left3"></div>
+        <div id="right3"></div>
+    </div>
+    <div id="parent4">
+        <div id="left4"></div>
+        <div id="right4"></div>
+    </div>
+</body>
+</html>

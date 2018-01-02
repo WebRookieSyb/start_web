@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+    *{box-sizing: border-box;}
+    #enter{width:600px;}
+    span{font-size:12px;}
+    .choice{position:relative;left:30px;}
+    /* #pro{position:absolute;top:5px;left:-10px} */
+    </style>
+</head>
+<body>
+        <input type="text" id="enter" placeholder="请选择攻击类型">
+        <form id="form1">
+            <div class="check1">
+                <img src="show1.png">
+                <label></label><input type="checkbox" name="check" class="checkedC">协议校验</span>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>HTTP协议违背</span></div>
+                </div>
+            </div>
+            <div class="check2">
+                <img src="show1.png">
+                <input type="checkbox"><span>基础防护</span>
+                <div class="choice">
+                    <img src="show1.png" id="pro">
+                    <input type="checkbox"><span>Web服务器/插件防护</span>
+                    <div class="choice">
+                        <div><input type="checkbox" name="check"><span>Web服务器漏洞攻击</span>
+                        </div>
+                        <div><input type="checkbox" name="check"><span>web插件漏洞攻击</span>
+                        </div>
+                        <div><input type="checkbox" name="check"><span>数据安全传输</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>HTTP访问控制事件</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>爬虫事件</span>
+                    </div>
+                </div>
+            </div>
+            <div class="check3">
+                <img src="show1.png">
+                <input type="checkbox"><span>高级防护</span>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>资源盗链</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>跨站请求伪造</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>恶意扫描</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>Cookie篡改</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>页面内容非法</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>敏感信息过滤</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>暴力破解攻击</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>XML攻击</span>
+                    </div>
+                </div>
+            </div>
+            <div class="check4">
+                <img src="show1.png">
+                <input type="checkbox"><span>精确防护</span>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>智能补丁</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>违背白名单</span>
+                    </div>
+                </div>
+            </div>
+            <div class="check5">
+                <img src="show1.png">
+                <input type="checkbox"><span>其他防护</span>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>自定义攻击</span>
+                    </div>
+                </div>
+            </div>
+            <div class="check6">
+                <img src="show1.png">
+                <input type="checkbox"><span>吸星检测</span>
+                <div class="choice">
+                    <div><input type="checkbox" name="check"><span>Java表达式攻击</span>
+                    </div>
+                    <div><input type="checkbox" name="check"><span>PHP代码执行</span>
+                    </div>
+                </div>
+            </div>
+    </form>
+    <script src="jquery.min.js"></script>
+    <script>
+        // var oF = document.getElementById('form1');
+        // function allChecked(obj) {
+        //      if(obj.checked){
+        //         for(var i=0;i<obj.childNodes.length;i++){
+        //             obj.childNodes[i].checked= true;
+        //         }
+        //      }
+        // }
+        // for(var i=0;i<oF.check.length;i++){
+        //     oF.check.onclick = function () {
+        //         allChecked(this);
+        //     }
+        // }
+    </script>
+</body>
+</html>

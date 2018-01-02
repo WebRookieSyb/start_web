@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fn1() {
+            this.name = 'syb';
+            this.age = 18;
+            this.sex =  '未知';
+        }
+        var objfn1 = new fn1();
+        console.log(objfn1);
+        console.log(typeof objfn1);
+        console.log(objfn1 instanceof Object);
+        console.log(objfn1 instanceof Function);
+        function fn2(name,age,sex){
+            this.name = "syb";
+            this.age = "18";
+            this.sex = "你好";
+        }
+        console.log(fn2.prototype.constructor === fn2);
+        var objfn2 = new fn2();
+        console.log(objfn2.__proto__ === fn2.prototype);
+        console.log(fn2.prototype.__proto__ === Object.prototype);
+        console.log(Object.prototype.__proto__);
+        console.log(Object.__proto__ === Function.prototype);
+        console.log(objfn2.prototype);
+        console.log(Object.prototype.prototype);//undefined  说明Object.prototype原型对象也是普通对象
+        function fn3(x,y) {
+            return x+y;
+        }
+        var objfn3 = new fn3();
+        console.log(objfn3.__proto__ === fn3.prototype);
+        console.log(fn3.__proto__ === Function.prototype);
+        console.log(Function.__proto__ === Function.prototype);
+        console.log(Function.prototype.__proto__ === Object.prototype);
+        console.log(objfn3.prototype);//undefined 说明普通对象没有prototype属性
+        var arr = [1,2,3];
+        console.log(arr.__proto__ ===Array.prototype);
+        // console.log(Function.prototype ===)
+        console.log(arr instanceof Function);
+        console.log(arr instanceof Array);
+        console.log(arr instanceof Object);
+        console.log(Array.prototype.__proto__ === Object.prototype);
+
+
+        function fn4(name,age) {
+            this.name = name;
+            this.age = age;
+            this.sayName = function() {
+                alert(this.name);
+            }
+        }
+        var fn41 = new fn4('syb',18);
+        var fn42 = new fn4('aaa',19);
+        //fn41和fn42都是fn4的实例，这两个实例都有constructor属性，指向fn4;
+        console.log(fn42.constructor === fn4);
+        console.log(fn41.constructor === fn4);
+        console.log(fn4.prototype.constructor === fn4);
+        //foo1; //foo1 is not defined
+        //var foo2;
+        //console.log(foo2);//undefined
+        //var foo3 = null;
+        //console.log(foo3);//null
+        
+        //constructor指向
+        function Person () {}
+        //直接给Person的原型指定对象字面量。则这个对象的constructor属性不再指向Person函数
+        Person.prototype = {
+            name:"syb"
+        };
+        var p1 = new Person();
+        console.log(p1 instanceof Person); // true
+        console.log(Person.prototype.constructor === Person); //false
+
+        //创建对象的几种方式
+        //new创建对象
+        var syb1 = new Object();
+        syb1.name = "syb";
+        syb1.sayName = function() {
+            console.log(this.name + "你好");
+        }
+        //用字面量创建对象
+        var syb2 = {
+            name: "syb",
+            sayName: function() {
+                console.log(this.name + "你好");
+            }
+        }   
+        //工厂模式实现
+        function createSyb1(name) {
+            var o = new Object();
+            o.name = name;
+            o.sayName = function() {
+                console.log(this.name + "你好");
+            }
+            return o;
+        }
+        var syb3 = createSyb1("syb");
+
+        //构造函数实现 
+        function CreateSyb2(name) {
+            this.name = name;
+            this.sayName = function() {
+                console.log(this.name + "你好");
+            }
+        }
+        var syb4 = new CreateSyb2("syb");//创建一个新对象，然后将构造函数的作用域赋给新对象，调用构造函数中的方法。
+        var syb5 = new CreateSyb2("syb");
+        console.log(syb4.sayName == syb5.sayName);//false 两个实例中调用的构造函数中的sayWhat方法不是同一个Function实例
+        //调用同一个方法却创建了两个不同的实例，可以进行优化
+        //原型对象模式
+        
+        
+    </script>
+</body>
+</html>

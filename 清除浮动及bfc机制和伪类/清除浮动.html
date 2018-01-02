@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        ul{width: 500px; background-color: #ccc;}
+        li{width: 100px; height: 100px; float: left; background-color: red;}
+        /* .clearfix:before,.clearfix:after{
+            content:"";
+            display: table;
+        }
+        .clearfix:after{
+            clear: both;
+        }
+        .clearfix{
+            zoom: 1;
+        } */
+        .clearfix::after{
+            content:"";
+            height: 0;
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+    <ul class="clearfix">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

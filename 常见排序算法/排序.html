@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //冒泡排序
+        /*比较相邻的元素。如果第一个比第二个大，就交换他们两个。第一对做完后，然后对第二对（即第二个数和第三个数）比较，
+        若前一个比后一个大，就交换他们，依次对每一对相邻元素做同样的工作，从开始第一对到结尾的最后一对。最后的元素应该
+        会是最大的数，最后一个不需要再做比较，所以是比较length-1次。*/
+        //时间复杂度为：O(n^2)
+        function bubbleSort(arr) {
+            var temp;
+            for(var i=0; i<arr.length-1; i++) {
+                for(var j=0; j<arr.length-(i+1); j++) {//每次循环将此范围内最大数值冒泡到最后
+                    if(arr[j]>arr[j+1]) {
+                        temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                    }
+                }
+                console.log(arr);
+                console.log('-------------------------------');
+            }
+            return arr;
+        }
+        var arr1 = [10,9,8,7,7,6,5,11,3];
+        console.log('冒泡排序');
+        var result1 = bubbleSort(arr1);
+        //选择排序
+        //在无序区中选出最小的元素，然后将它和无序区的第一个元素交换位置。
+        //时间复杂度为：O(n^2)
+        function selectionSort(arr) {
+            var minIndex,temp;
+            for(var i=0; i<arr.length-1; i++) {
+                minIndex = i;//假设范围内第一个为最小值
+                for(var j=i+1; j<arr.length; j++) {//在范围内选取最小值
+                    if(arr[j]<arr[minIndex]) {
+                        minIndex = j;
+                    }
+                }
+                if(minIndex != i){
+                    temp = arr[i];
+                    arr[i] = arr[minIndex];
+                    arr[minIndex] = temp;
+                }
+                console.log(arr);
+                console.log('-------------------------------');
+            }
+            return arr;
+        }
+        var arr2 = [10,9,8,7,7,6,5,11,3];
+        console.log('选择排序');
+        var result2 = selectionSort(arr2);
+        //插入排序
+        /*取出下一个元素，在已经排序的元素序列中从后向前扫描;如果该元素（已排序）大于新元素，将该元素移到下一位置，
+        直到找到已排序的元素小于或者等于新元素的位置,将新元素插入到该位置后*/
+        function insertionSort(arr) {
+            var preIndex,temp;
+            for(var i=1; i<arr.length; i++) {
+                preIndex = i-1;
+                temp = arr[i];
+                while(preIndex >= 0 && arr[preIndex]>temp) {
+                    arr[preIndex+1] = arr[preIndex];
+                    preIndex--;
+                }
+                arr[preIndex+1] = temp;
+                console.log(arr);
+                console.log('-------------------------------');
+            }
+            return arr;
+        }
+        var arr3 = [10,9,8,7,7,6,5,11,3];
+        console.log('插入排序');
+        console.log(insertionSort(arr3));
+        //归并排序
+        /*归并是将无序的数组 拆成N部分进行有序处理，然后合并。
+        但该算法的递归深度对js来说可能太高了。因为一些语言提供了尾递归优化。这意味着如果一个函数返回自身递归调用的结果，
+        那么调用的过程会被替换为一个循环，它可以显著提高速度。遗憾的是，JavaScript当前并没有提供尾递归优化。深度递归的
+        函数可能会因为堆栈溢出而运行失败
+        简而言之，就是JavaScript没有对递归进行优化。运用递归函数不仅没有运行速度上的优势，还可能造成程序运行失败。因此
+        不建议使用递归。
+        和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(n log n）的时间复杂度。
+        代价是需要额外的内存空间*/
+        function mergeSort(arr) {//自上而下的递归方法
+            if(arr.length < 2) {
+                return arr;
+            }
+            var middle = Math.floor(arr.length / 2),
+                left = arr.slice(0,middle),
+                right = arr.slice(middle);
+            return merge(mergeSort(left),mergeSort(right));
+            
+        }
+        function merge(left,right) {
+            console.log(left);
+            console.log(right);
+            var result = [];
+            while(left.length > 0 && right.length > 0) {
+                if(left[0] <= right[0]) {
+                    result.push(left.shift());
+                }else {
+                    result.push(right.shift());
+                }
+            }
+            if(left.length > 0) {
+                result = result.concat(left);
+            }
+            if(right.length > 0) {
+                result = result.concat(right);
+            }
+            console.log(result);
+            console.log('-------------------------------');
+            return result;
+        }
+        var arr4 = [10,9,8,7,7,6,5,11,3];
+        console.log('归并排序');
+        console.log(mergeSort(arr4));
+        //快速排序（最重要）
+        //（1）在数据集之中，选择一个元素作为"基准"（pivot）。
+        //（2）所有小于"基准"的元素，都移到"基准"的左边；所有大于"基准"的元素，都移到"基准"的右边。
+        //（3）对"基准"左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
+        /*快速排序的最坏运行情况是O(n²)，比如说顺序数列的快排。但它的平摊期望时间是O(n log n) ，
+        且O(n log n)记号中隐含的常数因子很小，比复杂度稳定等于O(n log n)的归并排序要小很多。所以，
+        对绝大多数顺序性较弱的随机数列而言，快速排序总是优于归并排序。*/
+        function quickSort(arr) {
+            if(arr.length <= 1) {
+                return arr;
+            }
+            var pivotIndex = Math.floor(arr.length / 2);
+            var pivot = arr.splice(pivotIndex,1)[0];
+            var left = [];
+            var right = [];
+            for(var i=0; i<arr.length; i++) {
+                if(arr[i] < pivot) {
+                    left.push(arr[i]);
+                }else {
+                    right.push(arr[i]);
+                }
+            }
+            console.log(left.concat([pivot],right));
+            console.log('-------------------------------');            
+            return quickSort(left).concat([pivot],quickSort(right));
+        }
+        var arr5 = [10,9,8,7,7,6,5,11,3];
+        console.log('快速排序');
+        console.log(quickSort(arr5));
+    </script>
+</body>
+</html>

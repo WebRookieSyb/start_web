@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 利用vertical-align实现 */
+        /* 只有一个元素属于inline或是inline-block（table-cell也可以理解为inline-block水平）水平，其身上的vertical-align属性
+        才会起作用。 
+        在使用vertical-align的时候，由于对齐的基线是用行高的基线作为标记，故需要设置line-height或设置display:table-cell;*/
+        #parent1{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000; display:table-cell;
+        vertical-align: middle;}
+        #child1{width: 200px; height: 100px; background-color:  red;} 
+        /* #parent1{width: 500px; background-color: #ccc;border: 1px solid #000; display:inline-block;
+        vertical-align: middle; line-height: 200px;}
+        #child1{width: 200px; height: 100px; background-color:  red;} 
+        此时无法实现，不知道为什么*/
+
+        /* 使用绝对定位 */
+        #parent2{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000; position: relative;}
+        #child2{width: 200px; height: 100px; background-color:  red; position: absolute; top: 50%; 
+        transform: translate(0,-50%);} 
+
+        /* 使用flex实现 */
+        #parent3{width: 500px; height: 200px; background-color: #ccc;border: 1px solid #000;
+        display: flex; align-items: center;}
+        #child3{width: 200px; height: 100px; background-color:  red;} 
+    </style>
+</head>
+<body>
+    <div id="parent1">
+        <div id="child1"></div>
+    </div>
+    <div id="parent2">
+        <div id="child2"></div>
+    </div>
+    <div id="parent3">
+        <div id="child3"></div>
+    </div>
+</body>
+</html>
