@@ -8,7 +8,53 @@
 </head>
 <body>
     <script>
-    
+    /*当页面上的FORM以GET方式向页面发送请求数据(如数据含有不安全字符，则浏览器先将其转换成16进制的字符再传送，如空格被转成%20)时，
+    WEB SERVER 将请求数据放入一名为QUERY_STRING的环境变量中，QueryString 方法是从这一环境变量中取出相应的值，并将被转成16进制
+    的字符还原(如 %20 被还原成空格)。如表单上有一 name为username的文本框及一 name为password的文本框 ， 当表单提交时，会产生这样
+    的URL串：http://www.xxxxx.com/xxxx.asp?username=nnnnn&password=mmmmm使用 Request.QueryString("username") 会得到 字符
+    串 "nnnnn"Request.QueryString("password") 得到 "mmmmm"。*/
+
+    /*Request.Form：获取以POST方式提交的数据（接收Form提交来的数据）；
+    Request.QueryString：获取地址栏参数(以GET方式提交的数据)
+    Request：包含以上两种方式(优先获取GET方式提交的数据)，它会在QueryString、Form、ServerVariable中都搜寻一遍。Request 从几个
+    集合取数据是有顺序的，从前到后的顺序依次是 QueryString,Form, 最后是 ServerVariables 。 Request 对象按照这样的顺序依次搜索
+    这几个集合中的变量，如果有符合的就中止，后面的就不管了。
+    */
+
+    //查询字符串参数
+    /*location对象提供了当前窗口中加载的文档有关的信息，将url解析为独立的片段，还提供一些导航功能。既是window对象的属性，
+    也是document对象的属性
+    location.search返回URL的查询字符串，这个字符串以问好开头*/
+    //创建queryString函数来解析查询字符串
+    function queryString1 () {//查询得到所有字符串
+        //取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+        obqs = {},
+        //取得每一项
+        items = qs.length ? qs.split("&") : [],
+        item = null,
+            name = null,
+            value = null,
+            i=0,
+            len = items.length;
+        for(i = 0;i<len;i++) {
+            item = items[i].split('=');
+            name = decodeURLComponent(item[0]);
+            value = decodeURLComponent(item[1]);
+            if(name.length) {
+                obqs[name] = value;               
+            }           
+        }
+        return abqs;
+    }
+    //按照名字获得字符串值
+    function queryString2 (name) {
+        var re = new RegExp("(^|&)"+name+"=([^&]*)(&|$)","i");
+        var qs = location.search.substring(1).match(re);
+        var value = "";  
+        qs != null ? value = decodeURLComponent(qs[2]) : value = null;
+        return value;
+    }
     </script>
 </body>
 </html>

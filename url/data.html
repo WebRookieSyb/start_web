@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="s"></div>
+    <script>
+        //建立Cookie传递数据（但是cookie有容量限制,chrome浏览器禁止本地cookie）
+        function setCookie(name,value,t){
+            var oDate = new Date();
+            oDate.setDate(oDate.getDate()+t);
+            document.cookie=name+'='+value+';expires='+oDate.toGMTString();
+        }
+        setCookie("syb","11",30);
+        //使用HTML5本地化存储(localStorage) 组件（本地最大能存储5M数据）localStorage是本地永久存储数据，是cookie的优化.
+        //或者用sessionStorage 是会话存储，关闭浏览器就没了
+        sessionStorage["par1"]="syb";
+        //使用url传递数据（浏览器对url有长度限制）
+        window.location.href = "read.html?name=syb";
+        //也可以用ajax传递数据
+    </script>
+</body>
+</html>
