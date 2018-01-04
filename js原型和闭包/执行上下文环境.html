@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var x = 10;
+        function f1(x) {
+            console.log(arguments);
+            console.log(x);
+        }
+        f1(2);
+        f1(5);//函数体是一个执行上下文环境
+        //函数每被调用一次就产生一个新的执行上下文环境
+        function ff(a) {
+            console.log(a); //function a() {}
+            //变量和function都会提前声明，但是function会覆盖变量（在变量不赋值的前提下）
+            var a = 2;
+            function a() {};
+            console.log(a) //2
+        }
+
+        //自由变量
+        var a = 10;
+        function fn() {
+            console.log(a);//这里的a是自由变量
+        }
+        function f2(f) {
+            var a = 5;
+            f(); 
+        }
+        f2(fn);
+
+        //构造函数
+        function Syb() {
+            this.name = "syb";
+            this.age = 18;
+
+            console.log(this);
+        }
+        var fs = new Syb();
+        console.log(fs.name);
+
+    </script>
+</body>
+</html>
