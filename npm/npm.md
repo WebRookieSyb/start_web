@@ -124,12 +124,24 @@ live-server模块有三个功能。
 * 启动一个HTTP服务器，展示指定目录的index.html文件，通过该文件加载各种网络资源，这是file://协议做不到的。
 * 添加自动刷新功能。只要指定目录之中，文件有任何变化，它就会刷新页面。
 * npm run serve命令执行以后，自动打开浏览器。
+上面三个功能需要三个模块来完成：http-server、live-reload和opener，现在只要live-server一个模块就够了
 
 "test": "npm-run-all test:*",
 "test:lint": "sass-lint --verbose --config .sass-lint.yml src/sass/*"
 上面命令规定，执行测试时，运行lint脚本，检查脚本之中的语法错误。
 
 [其他命令](http://javascript.ruanyifeng.com/nodejs/npm.html#toc12)
+##### http-server 超轻量级web服务器
+Http-server是基于nodejs的http服务器，它最大好处就是：
+可以使任意一个目录成为服务器的目录，完全抛开后台的沉重工程，直接运行想要的js代码。
+默认端口 http://localhost:8080 or http://127.0.0.1:8080 
+一些参数
+1. -p 端口号 (默认 8080)
+2. -a IP 地址 (默认 0.0.0.0)
+3. -d 显示目录列表 (默认 'True')
+4. --cors 启用 CORS via the Access-Control-Allow-Origin header
+5. -o 在开始服务后打开浏览器
+6. -S or --ssl 启用 https
 
 #### 其他npm命令
 * npm info命令可以查看每个模块的具体信息。
