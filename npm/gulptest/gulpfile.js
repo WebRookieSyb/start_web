@@ -15,11 +15,11 @@ gulp.task('server',function () {
     });
 });
 
-gulp.task('hello',function () {
-    console.log('你好');
-});
+// gulp.task('hello',function () {
+//     console.log('你好');
+// });
 
-gulp.task('default',['hello']);
+// gulp.task('default',['hello']);
 
 gulp.task('copy-index',function () {
     return gulp.src('index.html').pipe(gulp.dest('dest'))
@@ -49,10 +49,10 @@ gulp.task('data',function () {
     return gulp.src(['josn/*.json','xml/*.xml','!json/secret-*/json']).pipe(gulp.dest('dest/data'));
 });
 
-gulp.task('build',['copy-index','images','data'],function () {
-    //执行build任务是会先去执行它所依赖的三个任务，这三个任务是同时执行的，当三个任务都执行完才会执行build的任务。
-    console.log('编译成功！');
-})
+// gulp.task('build',['copy-index','images','data'],function () {
+//     //执行build任务是会先去执行它所依赖的三个任务，这三个任务是同时执行的，当三个任务都执行完才会执行build的任务。
+//     console.log('编译成功！');
+// })
 
 gulp.task('watch', function () {
     gulp.watch('index.html',['copy-index']);
@@ -68,11 +68,11 @@ gulp.task('sass',function () {
 
 gulp.task('default',['server','watch']);
 
-gulp.task('scripts',function () {
-    return gulp.src(['js/a.js','js/b.js'])
-      .pipe(concat('c.js'))
-      .pipe(gulp.dest('dest/js'))
-      .pipe(uglify())
-      .pipe(rename('c.min.js'))
-      .pipe(gulp.dest('dest/js'));
-});
+// gulp.task('scripts',function () {
+//     return gulp.src(['js/a.js','js/b.js'])
+//       .pipe(concat('c.js'))
+//       .pipe(gulp.dest('dest/js'))
+//       .pipe(uglify())
+//       .pipe(rename('c.min.js'))
+//       .pipe(gulp.dest('dest/js'));
+// });

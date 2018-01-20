@@ -8,6 +8,19 @@
 </head>
 <body>
     <script>
+        //函数声明和函数表达式
+        console.log(fnn1)
+        function fnn1() {};
+        console.log(fnn2)
+        var fnn2 = function () {};
+
+        eval('alert(123)');//eval接收的文本形式的代码
+
+        function fnn3(x){
+            console.log(x + 5);
+        }//函数体其实就是new Function（）出来的
+
+
         var x = 10;
         function f1(x) {
             console.log(arguments);
@@ -24,7 +37,7 @@
             console.log(a) //2
         }
 
-        //自由变量
+        //作用域在函数被声明的时候就创建了，而上下文环境在执行调用的时候产生
         var a = 10;
         function fn() {
             console.log(a);//这里的a是自由变量
@@ -33,7 +46,7 @@
             var a = 5;
             f(); 
         }
-        f2(fn);
+        f2(fn);//输出10，而不是5
 
         //构造函数
         function Syb() {
@@ -43,8 +56,62 @@
             console.log(this);
         }
         var fs = new Syb();
-        console.log(fs.name);
+        console.log(fs.name);//syb
+        //如果函数作为构造函数用，那么其中的this就代表它即将new出来的对象。
+        //但如果直接调用Syb函数，this指向window
 
+        var obj = {
+            y: 10,
+            fn: function() {
+                console.log(this);  //object
+                console.log(this.y);
+            }
+        };
+        obj.fn();
+        //如果函数作为对象的一个属性时，并且作为对象的一个属性被调用时，函数中的this指向该对象。
+        //如果不做为属性被调用时，依旧指向window
+        var fnnn1 = obj.fn;
+        fnnn1();
+        //当一个函数被call和apply调用时，this的值就取传入的对象的值。
+        //在全局环境下，this永远是window
+        console.log(this===window);
+        //普通函数在调用时，其中的this也都是window。
+        function fz(){
+            console.log(this);
+        }
+        fz();
+        
+        //闭包
+        function fa1() {
+            var max = 10;
+            return function bar(x) {
+                if(x>max){
+                    console.log(x);
+                }
+            } 
+        }
+        var faa = fa1();
+        faa(15);
+        
+        var min = 10,
+            fnc = function (){
+                if(x>min){
+                    console.log(x);
+                }
+            };
+        (function(f){
+            var max = 100;
+            fn(15);
+        })(fnc)
+
+        function fnd(){
+            var n=100;
+            function fnd2(){
+                alert(n+1);
+            }
+            return fnd2;
+        }
+        fnd();
     </script>
 </body>
 </html>

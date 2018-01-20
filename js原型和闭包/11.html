@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fnd(){
+            var n=100;
+            function fnd2(){
+                console.log(n+1);
+            }
+            return fnd2();
+        }
+        fnd();  
+        function f1(){
+
+　　　　var n=999;
+
+　　　　nAdd=function(){n+=1;alert(nAdd);}
+
+　　　　function f2(){
+　　　　　　alert(n);
+　　　　}
+
+　　　　return f2();
+
+　　}
+f1();
+nAdd();
+f1();
+
+// 　　var result=f1();
+
+// 　　result(); // 999
+
+// 　　nAdd();
+
+// 　　result(); // 1000  
+    </script>
+</body>
+</html>
