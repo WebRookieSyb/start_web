@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var xhr = null//创建ajax对象   ie6下创建ActiveObject
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        } else{
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xml.open('get','1.txt','true');
+        xhr.send();
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                alert(xhr.responseText);
+            }
+        }
+    </script>
+</body>
+</html>
