@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function ajax(obj){
+            obj = obj || {};
+            obj.method = obj.menthod.toUperCase() || 'POST';
+            obj.url = obj.url || '';
+            obj.async = obj.async || true;
+            obj.data = obj.data || null;
+            obj.success = obj.success || function () {};
+            var xml = null;
+            if(XMLHttpRequest) {
+                xml = new XMLHttpRequest();
+            }
+            else {
+                xml = ActionXObject('Microsoft.XMLHTTP');
+            }
+            var params = [];
+            for(var key in obj.data) {
+                params.push(key + '=' + obj.data[key]);
+            }
+            var postData = params.join('&');
+            if(obj.method === 'POST') {
+                xml.open(obj.menthod, obj.url, obj.async);
+                xml.setRequestHeader('Content-type','application/x-www-form-urlencoded;charset=utf-8');
+                xml.send(postData);
+            }
+            else if (obj.menthod === "GET") {
+                // for(var name in obj.data) {
+                //     parmas.push(encodeURIComponent(name) + '=' + encodeURLComponent(obj.data[name]));
+                // }
+                // var getData = parmas.join('&');
+                xml.open(obj.menthod, obj.url + "?" + postData, obj.async);
+                xml.send(null);
+            }
+            xml.onreadystatechange = function () {
+                if (xml.readyState == 4 && xml.status ==200){
+                    obj.success(xml.responseText);
+                }
+                else{
+                    console.log('请求错误'+xml.status);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

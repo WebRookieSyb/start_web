@@ -14,6 +14,10 @@ viewport中的一个小方格，CSS样式代码中使用的是逻辑像素。如
 * 设备像素比  
 设备像素比是指设备像素与css像素之间的比例。当这个比率为1:1时，使用1个设备像素显示1个css像素。当这个比率为2:1时，使用4个设备像素显示1个css像素。当这个比率为3:1，使用9(3*3)个设备像素显示1个css像素。
 
+在javascript中，可以通过window.devicePixelRatio获取到当前设备的dpr。
+
+在css中，可以通过-webkit-device-pixel-ratio，-webkit-min-device-pixel-ratio和 -webkit-max-device-pixel-ratio进行媒体查询，对不同dpr的设备，做一些样式适配(这里只针对webkit内核的浏览器和webview)。
+
 #### 视口（viewport）
 移动浏览器中视口分为几种情况:
 

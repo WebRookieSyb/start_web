@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr5 = [10,9,8,7,6,5,4,3,38,9];
+        console.log("快速排序");
+        console.log(quickSort(arr5));
+
+        function qiuckSort(arr) {
+            if(arr.length <= 1){
+                return arr;
+            }
+            var pivoIndex = Math.floor(arr.length / 2);
+            var pivot = arr.splice(picotIndex,1)[0];
+            var left = [];
+            var right = [];
+            for(var i = 0; i<arr.length; i++) {
+                arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
+            }
+            return quickSort(left).concat([povit],quickSort(right));
+        }
+    </script>
+</body>
+</html>

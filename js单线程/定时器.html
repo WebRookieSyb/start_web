@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(1);
+
+        setTimeout(function(){
+            console.log(2);
+        },1000);
+
+        console.log(3);
+        //输出1,3,2
+        setTimeout(function () {
+            console.log("a");
+        },0);
+
+        console.log("b");
+        //输出1,3,b,a,2
+        function foo () {
+            console.log('first');
+            setTimeout(function () {
+                console.log('second');
+            },5);
+        }
+        for(var i = 0;i<10;i++) {
+            foo();
+        }
+        //先输出了全部的first,在输出了全部的second
+    </script>
+</body>
+</html>
