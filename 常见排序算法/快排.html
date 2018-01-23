@@ -8,9 +8,6 @@
 </head>
 <body>
     <script>
-        var arr5 = [10,9,8,7,6,5,4,3,38,9];
-        console.log("快速排序");
-        console.log(quickSort(arr5));
 
         function qiuckSort(arr) {
             if(arr.length <= 1){
@@ -25,6 +22,9 @@
             }
             return quickSort(left).concat([povit],quickSort(right));
         }
+        var arr5 = [10,9,8,7,6,5,4,3,38,9];
+        console.log("快速排序");
+        console.log(quickSort(arr5));
     </script>
 </body>
 </html>

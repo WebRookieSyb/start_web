@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // 使用DOM1中的基础接口，递归遍历DOM树
+    // function traversal(node) {
+    //     if(node && node.nodeType === 1) {//nodeType 属性返回以数字值返回指定节点的节点类型。
+    //         console.log(node.tagName);//输出节点名称
+    //     }
+    //     var i = 0; theChildNodes = node.childNodes, item;
+    //     for(; i < theChildNodes.length ; i++){
+    //         item = theChildNodes[i];
+    //         if(item.nodeType === 1){
+    //             //递归遍历子节点
+    //             traversal(item);
+    //         }
+    //     }
+    // }
+    // traversal('document');
+
+    //使用DOM扩展的Element Traversal API，递归遍历DOM树
+    function travelsalAPI (node) {
+        if(node && node.nodeType === 1) {
+            console.log(node.tagName);
+        }
+        var i = 0;len = node.childElementCount, child = node.firstElementChild;
+        for(; i< len ; i++) {
+            travelsalAPI(child);
+            child = child.nextElementSibling;
+        }
+    }
+    travelsalAPI('document');
+</script>
+</body>
+</html>

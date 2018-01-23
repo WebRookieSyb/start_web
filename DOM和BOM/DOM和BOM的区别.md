@@ -14,7 +14,13 @@
 3. window 是 BOM对象，而非js对象。
 
 ##### DOM（文档对象模型）是 HTML 和 XML 的应用程序接口（API）。DOM描述了处理网页内容的方法和接口。
-DOM 全称是 Document Object Model，也就是文档对象模型。是针对XML和HTML的基于树的API。描述了处理网页内容的方法和接口，是HTML和XML的API，DOM把整个页面规划成由节点层级构成的文档。针对XHTML和HTML的DOM。这个DOM定义了一个HTMLDocument和HTMLElement做为这种实现的基础,就是说为了能以编程的方法操作这个 HTML 的内容（比如添加某些元素、修改元素的内容、删除某些元素），我们把这个 HTML 看做一个对象树（DOM树），它本身和里面的所有东西比如 `<div></div>` 这些标签都看做一个对象，每个对象都叫做一个节点（node）
+DOM 全称是 Document Object Model，也就是文档对象模型。是针对XML和HTML的基于树的API。描述了处理网页内容的方法和接口，是HTML和XML的API，DOM把整个页面规划成由节点层级构成的文档。针对XHTML和HTML的DOM。这个DOM定义了一个HTMLDocument和HTMLElement做为这种实现的基础,就是说为了能以编程的方法操作这个 HTML 的内容（比如添加某些元素、修改元素的内容、删除某些元素），我们把这个 HTML 看做一个对象树（DOM树），它本身和里面的所有东西比如 `<div></div>` 这些标签都看做一个对象，每个对象都叫做一个节点（node） 
+
+* 元素节点：构成了DOM的基础。文档结构中，<html>是根元素，代表整个文档，其他的还有<head>,<body>,<p>,<span>等等。元素节点之间可以相互包含(当然遵循一定的规则)
+
+* 文本节点：包含在元素节点中。
+
+* 属性节点：元素都可以包含一些属性，属性的作用是对元素做出更具体的描述，比如id,name之类的。
 ##### BOM 主要处理浏览器窗口和框架，不过通常浏览器特定的 JavaScript 扩展都被看做 BOM 的一部分，BOM描述了与浏览器进行交互的方法和接口。
 
 BOM(浏览器对象模型),核心是window，而window对象又具有双重角色，它既是通过js访问浏览器窗口的一个接口，又是一个Global（全局）对象。这意味着在网页中定义的任何对象，变量和函数，都以window作为其global对象。

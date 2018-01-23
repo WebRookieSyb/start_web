@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //封装一个跨浏览器的事件处理方式
+     var EventUtil = {
+         addEventHander : function(element,type,handler){
+             if (element.addEventListener) {//dom2级
+                 element.addEventListener(type,handler,false);
+             }
+             else if (element.attachEvent) {//兼容ie
+                 element.attachEvent("on" + type,handler);
+             }
+             else {//dom0级
+                element["on" + type] = handler;
+             }
+         },
+         removeEventHandler : function () {
+             if(element.addEventListener) {
+                 element.removeEventListener(type,handler,false);
+             }
+             else if (element.detachEvent) {
+                 element.derachEvent("on" + type,handler);
+             }
+             else {
+                 element["on"+type]= null;
+             }
+         }
+     }
+    </script>
+</body>
+</html>

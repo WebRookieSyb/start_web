@@ -8,14 +8,30 @@
 </head>
 <body>
     <script>
+        //setTimeout模拟异步
+        var foo = function () {
+            console.log('1');
+            setTimeout(function () {
+                console.log('2');
+            },1000);
+        }
+        var bar = function () {
+            console.log('3');
+        }
+        foo();
+        bar();
+
+        //回调函数实现异步编程
         function firstDo (callBack) {
             console.log('first');
             callBack('second');
         }
+        
         function callBackFn (name) {
             console.log(name);
         }
         firstDo(callBackFn);
+
     </script>
 </body>
 </html>
