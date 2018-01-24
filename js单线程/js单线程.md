@@ -1,4 +1,5 @@
-#### 浏览器线程
+#### 浏览器线程   
+[JavaScript 从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://www.cnblogs.com/wangweizhang/articles/8328606.html)**非常好一个文章，自己整理的有点问题，先看着篇文章**
 * 而浏览器时多线程的：  
 1.js引擎线程   
 2.UI渲染线程  

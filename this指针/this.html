@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div></div>
+<script>
+    /*this是Javascript语言的一个关键字。它代表函数运行时，自动生成的一个内部对象*/
+    //this指的是调用函数的那个对象。
+    /* this到底绑定或者引用的是哪个对象环境决定于函数被调用的地方。而函数的调用有不同的方式，
+    在不同的方式中调用决定this引用的是哪个对象是由四种规则确定的。*/
+
+    //this机制的四种规则
+
+    //1.纯粹的函数调用，默认绑定全局对象
+    var a = 1;
+    function fn1() {
+        var a = 2;
+        console.log(this.a);//全局调用，this指向全局对象Global
+    }
+    fn1(); //1
+    var fnn = function () {
+        console.log(this);//    函数表达式
+    }
+    fnn();//window
+    (function(){console.log(this)})();//window,自执行函数this指向window
+    //2.作为对象的方法调用（隐式绑定）
+    function fn2() {
+        console.log(this.a);
+    }
+    var obj = {
+        a: 3,
+        fn:fn1  //作为对象的方法调用，this指向这个对象。
+    };
+    obj.fn();  //3
+    var oDiv = document.querySelector('div');
+    oDiv.onclick = function () {
+        console.log(this);  //事件绑定，this指向这个对象。
+    }
+    oDiv.addEventListenter('click',function () {
+        console.log(this)  //事件监听，this指向这个对象。
+    })
+
+    //失去隐式绑定
+    var bar = obj.fn;  /*虽然有隐式绑定，但是它执行的效果明显是把fn赋给bar。
+    这样bar执行的时候，依然是默认绑定全局变量，所以输出结果如上。*/
+    bar();
+    //3. 作为构造函数调用
+    function Fn(a) {
+        this.a = a;  //通过构造函数生成新对象，this指向这个对象。
+    }
+    var newFn = new Fn(2);
+    console.log(newFn.a)
+
+    //4.显式绑定（apply(),call(),blind()）
+    var obj2 = {
+        a:5
+    };
+    fn2.call(obj2);   //传入第一个参数this指向的对象
+    fn2.call(null);   //空或者为null的时候this指向window。
+    fn2.call();
+</script>
+</body>
+</html>
