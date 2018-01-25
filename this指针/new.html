@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function Fn1() {
+        var a = 1;
+        var b = {
+            c:"wx"
+        };
+        return a;//返回一个非对象时，会被丢弃，然后返回一个创建的新对象
+    }
+    var fn11 = new Fn1();  
+    console.log(fn11);
+    function Fn2(){
+        var a = 1;
+        var b = {
+            c:"qq"
+        };
+        return b;//返回一个对象
+    }
+    var fn21 = new Fn2();
+    console.log(fn21);
+    </script>
+</body>
+</html>
