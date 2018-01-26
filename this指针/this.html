@@ -41,9 +41,9 @@
     oDiv.onclick = function () {
         console.log(this);  //事件绑定，this指向这个对象。
     }
-    oDiv.addEventListenter('click',function () {
-        console.log(this)  //事件监听，this指向这个对象。
-    })
+    // oDiv.addEventListenter('click',function () {
+    //     console.log(this)  //事件监听，this指向这个对象。
+    // })
 
     //失去隐式绑定
     var bar = obj.fn;  /*虽然有隐式绑定，但是它执行的效果明显是把fn赋给bar。
@@ -66,6 +66,13 @@
     fn2.call(obj2);   //传入第一个参数this指向的对象
     fn2.call(null);   //空或者为null的时候this指向window。
     fn2.call();
+    var a = [1,2,3,4];
+    // console.log(a.isArray());
+    var b = {
+        b : 1,
+        c : "ww"
+    }
+    console.log(b.valueOf())
 </script>
 </body>
 </html>
