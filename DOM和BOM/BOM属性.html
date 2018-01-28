@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">111</div>
+<script>
+    function queryString () {//查询得到所有字符串
+        //取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+        obqs = [],
+        //取得每一项
+        items = qs.length ? qs.split("&") : [],
+        item = null,
+            name = null,
+            value = null,
+            i=0,
+            len = items.length;
+        for(i = 0;i<len;i++) {
+            item = items[i].split('=');
+            name = decodeURIComponent(item[0]);// 因为查询字符串被浏览器编码过;
+            value = decodeURIComponent(item[1]);
+            if(name.length) {
+                obqs[name] = value;               
+            }           
+        }
+        return obqs;
+    }
+    var args = queryString();
+
+    // 在Web开发中,我们经常需要获取诸如?id=5&search=ok这种类型的URL的键值对;
+    // 通过location,我们可以写一个函数,来一一获取;
+//     function getArgs(){
+//     // 创建一个存放键值对的数组;
+//     var args = [];
+//     // 去除?号;
+//     var qs = location.search.length>0?location.search.substring(1):'';
+//     // 按&字符串拆分数组;
+//     var items = qs.split('&');
+//     var item = null, name = null, value = null;
+//     //遍历
+//     for(var i = 0; i<items.length; i++){
+//       item = items[i].split('=');
+//       name = decodeURIComponent(item[0]);  // 因为查询字符串被浏览器编码过;
+//       value = decodeURIComponent(item[1]);// 每个查询字符串参数都变成了args对象的属性;
+//       // 把键值对存放到数组中;
+//       args[name] = value;
+//     }
+//     return args;
+//   }
+
+    var oDiv = document.getElementById('div1')
+    oDiv.onclick = function () {
+        location.hash = "#ad=1";
+        location.search = "?name=syb&a=11";
+        
+    }
+    for(var key in args) {
+        console.log(args[key]);
+    }              // 获取URL中id对应的值;
+
+    // location.assign('http://www.baidu.com');
+    // window.location = 'http://www.baidu.com';
+    // location.href = 'http://www.baidu.com';
+
+    //修改url
+    // location.hash = "#abc";
+    // location.search = "?name=syb";
+    //弹出警告
+    alert('警告');
+    // 确认和取消
+    if(confirm('请选择确定或取消')) {
+        console.log(true);
+    }
+    else {
+        console.log(false);
+    }
+    //输入提示框
+    console.log(prompt('请输入一个数字',"数字是："));
+    // 调用打印及查找对话框
+    print();   // 打印; 弹出浏览器打印窗口;
+    find();     // =>boolean;页面有匹配的查找内容返回true;相对于Ctrl+F
+    // 状态栏
+    defaultStatus = '状态栏默认文本';       // 浏览器底部状态栏初始默认值;
+    status = '状态栏文本';            // 浏览器底部状态栏设置值;
+
+    // for(var i = 0; i<window.frames.length; i++) {
+    //     console.log(window.frames.length);//当前窗口的所有子窗口
+    // // }
+    // console.log(window.frames === window);
+    // console.log(history.length);//初始为1
+
+    // history.go( 1); 
+
+    // var stateObj = { foo : 'bar'};
+    // window.history.pushState(stateObj, null, "遍历dom树.html");//地址发生改变，但不触发页面
+
+    // console.log(history.length);
+
+    // window.history.pushState(null, null, 'https://twitter.com/hello');
+    
+    // window.history.pushState({page: 1}, 'title 1', '?page=1');
+    // // window.history.pushState({page: 2}, 'title 2', '?page=2');
+    // history.replaceState({page: 3}, 'title 3', '?page=3');
+    // // history.back()
+    // //url显示为http://example.com/example.html?page=1
+    // history.back()
+    // //url显示为http://example.com/example.html
+    // history.go(2)
+    // //url显示为http://example.com/example.html?page=3
+
+
+
+</script>
+</body>
+</html>
