@@ -1,4 +1,12 @@
 ### url的组成
+
+统一资源定位符是对可以从互联网上得到的资源的位置和访问方法的一种简洁的表示，是互联网上标准资源的地址。互联网上的每个文件都有一个唯一的URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。
+* 绝对url和相对url
+
+绝对URL（absolute URL）显示文件的完整路径，这意味着绝对URL本身所在的位置与被引用的实际文件的位置无关。
+
+相对URL（relative URL）以包含URL本身的文件夹的位置为参考点，描述目标文件夹的位置。
+
 ##### http://www.aspxfans.com:8080/news/index.asp?boardID=5&ID=24618&page=1#name
 1. 协议部分：该URL的协议部分为“http：”，以：作为结束符，这代表网页使用的是HTTP协议。在Internet中可以使用多种协议，如HTTP，FTP等等本例中使用的是HTTP协议。而浏览器将支持一些额外的协议，如data:和javascript:等。
 
