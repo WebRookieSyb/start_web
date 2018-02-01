@@ -106,3 +106,5 @@ body{
 CSS3中伪类和伪元素的语法不同；
 可以同时使用多个伪类，而只能同时使用一个伪元素；
 
+
+[css选择器的权重题目](http://blog.csdn.net/chedabang/article/details/51763664)
