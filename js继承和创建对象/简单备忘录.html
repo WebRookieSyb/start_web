@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //简单实现一个自我存档
+    //当 temperature 属性设置时，archive 数组会得到一个 log。
+    function Archiver() {
+        var temperature = null;
+        var archive = [];
+
+        Object.defineProperty(this, 'temperature', {
+            get: function() {
+                console.log('get!');
+                return temperature;
+            },
+            set: function(value) {
+                temperature = value;
+                archive.push({ val: temperature});
+            }
+        });
+        this.getArchive = function() {
+            return archive;
+        };
+    }
+    var arc = new Archiver();
+    arc.temperature; //get!
+    arc.temperature = 11;
+    arc.temperature = 13;
+    console.log(arc.getArchive());//[{val:11},{val:13}]
+</script>   
+</body>
+</html>

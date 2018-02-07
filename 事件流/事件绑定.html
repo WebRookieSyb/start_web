@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 直接在dom元素上绑定 -->
+    <input type="button" value="点击" onclick="hello()" >
+    <!-- 在js中绑定 -->
+    <input type="button" value="再点击" id="btn">
+    <!-- 帮定事件监听函数 -->
+    <input type="button" value="还点击" id="btnn">
+    <script>
+    function hello() {
+        console.log(1);
+    }
+    var oBtn = document.getElementById('btn');
+    oBtn.onclick = function () {
+        console.log(2);
+    }
+    document.getElementById('btnn').addEventListener('click',hello,false);
+
+    </script>
+</body>
+</html>

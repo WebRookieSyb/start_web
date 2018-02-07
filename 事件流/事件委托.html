@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="nav">
+        <li>11</li>
+        <li>22</li>
+        <li>33</li>
+        <li>44</li>
+    </ul>
+    <script>
+        //如果一个元素上即绑定了冒泡事件又绑定了捕获事件，先执行捕获事件。
+        (function () {
+            var oUl = document.getElementById('nav');
+            oUl.addEventListener('click',show);
+            oUl.addEventListener('click',hello,true);
+            function show(e) {
+                e = e || event;
+                var target = e.target || e.srcElement;
+                if(target.nodeName.toLowerCase() == 'li') {
+                    console.log(target.innerHTML);
+                }
+            }
+            function hello(e) {
+                e = e || event;
+                var target = e.target || e.srcElement;
+                if(target.nodeName.toLowerCase() == 'li') {
+                    console.log(target.innerHTML+"hello");
+                }
+            }
+
+        })();
+    </script>
+</body>
+</html>

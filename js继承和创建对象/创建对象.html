@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //new创建对象
+    var obj1 = new Object();//创建了Object引用类型的一个新实例，然后把实例保存在变量obj1中。
+    obj1.name = "syb";
+    obj1.age = 18;
+    obj1.sayName = function () {
+        console.log(this.name);
+    };
+    obj1.sayName();
+    
+    //对象字面量创建对象
+    var obj2 = {
+        name : "syb",
+        age : 18,
+        sayName : function () {
+            console.log(this.age);
+        }
+    }
+    obj2.sayName();
+
+    //工厂模式
+    function createStudent (name,sex,age) {
+        var o = new Object();
+        o.name = name;
+        o.sex = sex;
+        o.age = age;
+        o.sayName = function () {
+            console.log(this.name);
+        }
+        return o;
+    }
+    var s1 = createStudent('syb','man',19);
+
+    //构造函数模式
+    function Student(name,sex,grade) {
+        this.name = name;
+        this.sex = sex;
+        this.grade = grade;
+        this.sayName = function () {
+            console.log(this.name);
+        }
+    }
+    var s2 = new Student('sybb','man','20');
+    //原型模式
+    function Student1() {
+
+    }
+    // Student1.prototype.name = 'syb';
+    // Student1.prototype.sex = 'man';
+    // Student1.prototype.age = '20';
+    // Student1.prototype.sayName = function () {
+    //     console.log(this.name);
+    // }
+    //更常见的做法是用一个包含所有属性和方法的对象字面量来重写整个原型对象，并重设constructor属性。
+    Student1.prototype = {
+        name:'syb',
+        sex:'man',
+        age:'20',
+        sayName: function () {
+            console.log(this.name);
+        }
+    }
+    var s3 = new Student1();
+    s3.name = 'syb1';
+    console.log(Object.getPrototypeOf(s3));//方法返回参数对象的原型对象。
+    console.log(Object.keys(s3));//方法返回对象上课枚举的实例属性。
+
+    
+
+    //组合使用构造和原型
+    function Student2(name,sex,age) {
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+    }
+    Student2.prototype.sayName = function () {
+        console.log(this.name);
+    }
+    Student2.prototype.school = 'youdian';
+    var s4 = new Student2('syb','man','12');
+    var s5 = new Student2('sybs','mans','123');
+    console.log(s4.sayName === s5.sayName);
+
+    //动态原型模式
+    function Person1(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        if (typeof this.sayName != 'function') {
+            Person1.prototype.sayName = function() {
+                console.log(this.name);
+            };
+        }
+    }
+    var person11 = new Person1('syb', 29, 'student');
+    person11.sayName();
+
+    //寄生构造函数模式
+    function Person2(name, age, job) {
+        var o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.sayName = function() {
+            console.log(this.name);
+        }
+        return o;
+    }
+    var person2 = new Person2('syb', 23, 'studnet');//比工厂模式多了一个new
+    person2.sayName(); 
+    //这个模式可以用于比较特殊模式时，假设我们想创建一个具有额外方法的特殊数组，由于不能直接修改Array构造函数，因此可以用这个方法
+    function SpecialArray() {
+        //创建数组
+        var values = new Array();
+        //添加值
+        values.push.apply(values, arguments);
+        //添加方法
+        values.toPipedString = function () {
+            return this.join('|');
+        }
+        return values;
+    }
+    var colors = new SpecialArray('1','2','3');
+    console.log(colors.toPipedString);   //'red|blue|green'
+
+
+    //稳妥构造函数
+    function person2(bame, age, job) {
+        var o = new Object();  //创建要返回的对象
+        //在这里添加私有变量和函数
+        o.name = 'syb';
+        o.age = 18;
+        o.job = 'student';//不用this创建
+        o.sayNmae = function() {
+            console.log(name);
+        }
+        return o;
+    }
+    var personaa = Person2('111', 22, 'haha');  //不用new创建对象
+    personaa.sayName();//只能通过sayName访问到内部属性
+
+</script>
+</body>
+</html>

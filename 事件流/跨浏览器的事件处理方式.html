@@ -33,6 +33,18 @@
              }
          }
      }
+
+     //this指针在attachEvent函数中指向window,封装是改变this指向
+     function fn(obj,ev,fn) {
+        if(obj.addEventListener) {
+            return obj.addEventListener(ev,fn,false);
+        }else {
+            return obj.attachEvent('on'+ev,function () {
+                fn.call(obj);
+            })
+        }
+     }
+
     </script>
 </body>
 </html>
