@@ -1,0 +1,269 @@
+#### 原型到原型链到继承
+
+##### 函数对象和普通对象
+
+要了解函数原型和原型链，就要先了解在函数对象和不同对象。
+
+在***js中函数也是对象，我们称之为函数对象***，与其他引用类型一样具有属性和方法，由于函数是对象，因此函数名实际上也是一个指向函数对象的指针，不会与某个函数绑定。
+
+那么我们如何区分函数对象和普通对象呢？首先函数对象就是Function类型的实例，由Function创建的对象。因为Object也是由Function创建的，所以***Object也是函数对象***。其次***构造函数是函数对象***，可以通过new来创建实例对象。
+
+```javascript
+function Person() {
+
+}
+var person = new Person();
+person.name = 'Kevin';
+console.log(person.name) // Kevin
+```
+
+##### 原型
+
+***每个函数对象都有一个prototype属性***，指向函数对象的原型对象。当使用这个构造函数创建实例的时候，prototype属性指向的原型对象就成为实例的原型对象。
+
+```javascript
+function Dog(name, color) {
+    this.name = name
+    this.color = color
+    this.bark = () => {
+        console.log('wangwang~')
+    }
+}
+const dog1 = new Dog('dog1', 'black')
+const dog2 = new Dog('dog2', 'white')
+```
+
+什么是原型？js中没有类的概念，因此我们直接通过构造函数来创建实例。但这有个问题，有两个dog实例被创建，它们有自己的名字、颜色，但它们都会叫，而通过构造函数创建实例的时候，每创建一个实例，都需要重新创建这个这些相同的东西，再把它添加到新的实例中。那么我们为什么不把他们都放到一个单独的地方，让所有的实例都能访问到呢？这里就是原型了。
+
+```javascript
+function Dog(name, color) {
+    this.name = name
+    this.color = color
+}
+
+Dog.prototype.bark = () => {
+    console.log('wangwang~')
+}
+const dog1 = new Dog('dog1', 'black')
+const dog2 = new Dog('dog2', 'white')
+dog2.bark() = () => {
+    console.log('miaomiaomiao~')
+}
+dog1.bark()  //'wangwang~'
+dog2.bark()  //'miaomiaomiao~'
+```
+
+将实例中共有的属性放到原型对象中，让所有实例共享这部分属性。如果想要统一修改所有实例继承的属性，只需要直接修改原型对象中的属性即可。而且每个实例仍然可以重写原型中已经存在的属性来覆盖这个属性，并且不会影响到其他的实例。
+
+```javascript
+Dog.prototype.constructor === Dog //true
+```
+
+原型对象默认拥有一个constructor属性，指向指向它的构造函数（也就是说构造函数和原型对象是互相指向的关系）。
+
+##### 原型链
+
+那么实例对象是如何访问到原型对象的呢？***每个对象都拥有一个隐藏的属性[[prototype]]，指向创建它的构造函数的prototype，这个属性可以通过 `Object.getPrototypeOf(obj)` 或 `obj.__proto__` 来访问***。
+
+```javascript
+dog1.__proto__ === Dog.prototype //true
+Object.getPrototypeOf(dog1) === Dog.prototype  //true
+```
+
+既然所有对象都有[[prototype]]属性，那么原型对象也有自己的原型对象。
+
+```javascript
+Dog.prototype.__proto__ === Object.prototype  //true
+Object.prototype.__proto__ === null  //true
+Dog.__proto__ === Function.prototype  //true
+
+dog1.toString()   //"[object Object]"
+```
+
+dog1去调用toString方法，首先在它自身查找，如果自身没有就通过[[prototype]]不断的指向原型对象，来一层一层的向上查找，直至到null,而我么都知道toString方法是在Object.prototype上的，所以成功调用。这样层层上溯，就形成了一个类似链表的结构，我们称为**原型链**，因此通过原型链我们实现类js中的继承。
+
+在说继承之前，我们先通过这张原型链的图来深化一下我们的理解(只考虑本图上的情况)
+
+<img src="https://raw.githubusercontent.com/WebRookieSyb/graph-bed/master/img/prototype.jpg" alt="原型链" style="zoom:50%;" />
+
+* 普通对象的`__proto__`指向创建它的构造函数的prototype
+* 函数对象是由Function创建的，即构造函数的构造函数都是Function，那么的话，所有函数对象的`__proto__`都指向这Function.prototype。
+* 所有对象的prototype（原型对象,除了Object.prototype）都是由Object创建的，所以他们的`__proto__`指向Object.prototype，包括Function.prototype
+* Object.prototype的`__proto__`指向null
+
+##### 原型链与继承
+
+原型链继承在prototype上添加方法的时候不应该
+
+```javascript
+A.prototype = {
+    say: function() { 
+        console.log('hello')
+    }
+}
+```
+
+应为这样会修改原有的prototype的值，包括constructor和`__proto__`属性等。
+
+```javascript
+function Father(){
+	this.property = true;
+}
+Father.prototype.getFatherValue = function(){
+	return this.property;
+}
+function Son(){
+	this.sonProperty = false;
+}
+//继承 Father
+Son.prototype = new Father();//Son.prototype被重写,导致Son.prototype.constructor也一同被重写
+Son.prototype.getSonVaule = function(){
+	return this.sonProperty;
+}
+Son.prototype.constructor = Son;
+var instance = new Son();
+alert(instance.getFatherValue());//true
+```
+
+原型链并非十分完美, 它包含如下两个问题.
+
+1. 当原型链中包含引用类型值的原型时,该引用类型值会被所有实例共享;
+2. 在创建子类型(例如创建Son的实例)时,不能向超类型(例如Father)的构造函数中传递参数.
+
+为了解决这些问题，我们有了一下都方法
+
+借用构造函数：即在子类型构造函数的内部调用超类型构造函数.
+
+```javascript
+function Father(){
+	this.colors = ["red","blue","green"];
+}
+function Son(){
+	Father.call(this);//继承了Father,且向父类型传递参数
+}
+var instance1 = new Son();
+instance1.colors.push("black");
+console.log(instance1.colors);//"red,blue,green,black"
+
+var instance2 = new Son();
+console.log(instance2.colors);//"red,blue,green" 可见引用类型值是独立的
+```
+
+此时我们因为没有用到原型链，所以父类方法不能复用
+
+组合继承
+
+```javascript
+function Father(name){
+	this.name = name;
+	this.colors = ["red","blue","green"];
+}
+Father.prototype.sayName = function(){
+	alert(this.name);
+};
+function Son(name,age){
+	Father.call(this,name);//继承实例属性，第一次调用Father()
+	this.age = age;
+}
+Son.prototype = new Father();//继承父类方法,第二次调用Father()
+Son.prototype.sayAge = function(){
+	alert(this.age);
+}
+```
+
+组合继承解决了前面几种的问题，是最常用的继承方法，但由于调用了2次父类的构造方法，会存在一份多余的父类实例属性。
+
+寄生组合继承
+
+```javascript
+function Parent(name) {
+    this.name = name; // 实例基本属性 (该属性，强调私有，不共享)
+    this.arr = [1]; // (该属性，强调私有)
+}
+Parent.prototype.say = function() { // --- 将需要复用、共享的方法定义在父类原型上 
+    console.log('hello')
+}
+function Child(name,like) {
+    Parent.call(this,name,like) // 核心  
+    this.like = like;
+}
+// Child.prototype = Parent.prototype //缺点： 其实为共用来一个prototype,并没有继承关系，而且当修复子类构造函数的指向后，父类实例的构造函数指向也会跟着变了。
+Child.prototype = Object.create(Parent.prototype) // 核心  通过创建中间对象，子类原型和父类原型，就会隔离开。
+//修改construct指向
+Child.prototype.constructor = Child
+
+//简单的继承方法
+function extend1(subClass,superClass){
+	var prototype = Object.create(superClass.prototype);//创建对象
+	prototype.constructor = subClass;//增强对象
+	subClass.prototype = prototype;//指定对象
+}
+//复杂的继承方法
+function extend2(subClass, superClass) {
+  var F = function() {};
+  F.prototype = superClass.prototype;
+  subClass.prototype = new F(); 
+  subClass.prototype.constructor = subClass;
+
+  subClass.superclass = superClass.prototype;
+  if(superClass.prototype.constructor == Object.prototype.constructor) {
+    superClass.prototype.constructor = superClass;
+  }
+}
+```
+
+
+
+##### 其他
+
+* Object.create(proto[, propertiesObject])
+
+  创建一个新对象，新对象的`__proto__`属性指向传入的proto对象
+
+  ```javascript
+  function create(proto){
+    function F(){};
+    F.prototype = proto;
+    return new F();
+  } 
+  ```
+
+  create返回一个构造函数F的实例，这个实例的`__proto__`就指向着F的prototype，即为我们传入的对象
+
+* new()创建 https://juejin.im/post/5c7b963ae51d453eb173896e
+
+  ```javascript
+  function create(Con, ...args) {
+    let obj = {}
+    Object.setPrototypeOf(obj, Con.prototype)
+    let result = Con.apply(obj, args)
+    return result instanceof Object ? result : obj
+  }
+  ```
+
+* instanceof && typeof
+
+* 属性查找
+
+  hasOwnProperty 
+
+   isPrototypeOf
+
+
+
+
+
+
+
+
+
+
+
+
+
+* 参考
+
+https://juejin.im/post/5a94c0de5188257a8929d837
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+
