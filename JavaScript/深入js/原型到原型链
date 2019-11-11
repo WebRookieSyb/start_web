@@ -93,18 +93,6 @@ dog1去调用toString方法，首先在它自身查找，如果自身没有就�
 
 ##### 原型链与继承
 
-原型链继承在prototype上添加方法的时候不应该
-
-```javascript
-A.prototype = {
-    say: function() { 
-        console.log('hello')
-    }
-}
-```
-
-应为这样会修改原有的prototype的值，包括constructor和`__proto__`属性等。
-
 ```javascript
 function Father(){
 	this.property = true;
@@ -212,7 +200,25 @@ function extend2(subClass, superClass) {
 }
 ```
 
+对于继承，我们需要注意
 
+* 原型链是否真的一层一层向上指了，有没有出现`Child.prototype = Parent.prototype`这种情况，这种情况的话`Child.prototype.__proto__`其实并没有指向`Parent.prototype`不是真正的实现了原型链继承，他们公用了一个原型对象，关系应该更类似于兄弟。
+
+* constructor指向是否正确，一般来说我们需要手动实现`Child.prototype.constructor = Child`
+
+* 原型链继承在prototype上添加方法的时候不应该
+
+  ```javascript
+  A.prototype = {
+      say: function() { 
+          console.log('hello')
+      }
+  }
+  ```
+
+  应为这样会修改原有的prototype的值，包括constructor和`__proto__`属性等。
+
+* `Child.__proto__ === Function.prototype  //true`此时``Child.__proto__`依旧指向`Function.prototype`。继承的实现仅仅通过的是实例对象和原型对象上的`__proto__`指向实现的，并没有改变构造函数`__proto__`的指向。ES6中的继承，才对此做出来了设置。。。这里不再深入
 
 ##### 其他
 
@@ -230,36 +236,59 @@ function extend2(subClass, superClass) {
 
   create返回一个构造函数F的实例，这个实例的`__proto__`就指向着F的prototype，即为我们传入的对象
 
-* new()创建 https://juejin.im/post/5c7b963ae51d453eb173896e
+* new创建 https://juejin.im/post/5c7b963ae51d453eb173896e
+
+  new创建对象不一定会返回实例对象，如果构造函数本事就返回一个对象，那么new创建对象就会返回构造函数本身返回的对象。
+
+  new的过程做了四件事
+
+  1. 创建一个空对象
+  2. 设置原型链，将新对象的`__proto__`指向构造函数的prototype
+  3. 绑定this指针
+  4. 判断构造函数Func的返回值类型
 
   ```javascript
   function create(Con, ...args) {
     let obj = {}
+    // obj.__proto__ = Con.prototype
     Object.setPrototypeOf(obj, Con.prototype)
     let result = Con.apply(obj, args)
     return result instanceof Object ? result : obj
   }
   ```
 
-* instanceof && typeof
-
 * 属性查找
 
-  hasOwnProperty 
+  hasOwnProperty 判断属性是否为自身属性 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
 
-   isPrototypeOf
+  instanceof 检测构造函数的原型对象是否出现在某个实例对象的原型链上 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof
 
+  我们可以使用instanceof来判断函数是普通函数调用还是构造函数调用
 
+  ```javascript
+  function f(){
+    if(this instanceof arguments.callee)
+      console.log('此处作为构造函数被调用');
+    else
+      console.log('此处作为普通函数被调用');
+  }
+  f();//此处作为普通函数被调用
+  new f();//此处作为构造函数被调用
+  ```
 
+  
 
+  isPrototypeOf  一个对象是否在另一个对象的原型链上 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf
 
+  setPrototypeOf 设置`__proto__`属性 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf
 
+  getPrototypeOf 获取  获取`__proto__`属性
 
+* 混入 mixin
 
+  `Object.assign(target, source)`来实现混入
 
-
-
-
+  https://juejin.im/post/5ca38c1551882543eb51fc1a
 
 * 参考
 
